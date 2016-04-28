@@ -11,8 +11,10 @@ class PlayerCrateKeyRecieveEvent extends PlayerEvent implements Cancellable{
 	public static $handlerList = null;
 	public static $eventPool = [];
 	public static $nextEvent = 0;
-	
+
+	/** @var Block $source */
 	protected $source;
+	/** @var Player $player */
 	protected $player;
 	
 	public function __construct(Player $player, Block $source){
