@@ -107,10 +107,6 @@ class EventListener implements Listener {
             if($chestTile instanceof \pocketmine\tile\Chest) {
                 $this->plugin->putRandomContent($chestTile->getInventory());
                 $p->sendMessage($this->plugin->getLang("key-use-message", $p));
-                // ADD PARTICLE
-                $b = $e->getTarget();
-                $particle = new SmokeParticle($b, $this->plugin->getConfig()->get('particle-scale'));
-                $b->getLevel()->addParticle($particle);
             }
 	}
 	
@@ -125,11 +121,6 @@ class EventListener implements Listener {
 		// GIVE PLAYER KEY
 		$key = Item::get($this->plugin->getConfig()->get('key-id'), 0 ,1);
 		$e->getPlayer()->getInventory()->addItem($key);
-		// ADD PARTICLE
-		if($this->plugin->getConfig()->get('enable-key-recieve-particle')){
-			$particle = new SmokeParticle(new \pocketmine\math\Vector3($b->getFloorX(), $b->getFloorY(), $b->getFloorZ()), $this->plugin->getConfig()->get('particle-scale'));
-			$p->getLevel()->addParticle($particle);
-		}
 	}
 	
 	public function onKeyHold(PlayerItemHeldEvent $e){
@@ -149,9 +140,6 @@ class EventListener implements Listener {
 		// CHECK PERMISSION
 		if($p->hasPermission('cratekeys.chest.crate')){
 				$p->sendMessage($this->plugin->getLang("crate-chest-created"));
-				// ADD PARTICLE
-				$particle = new SmokeParticle(new \pocketmine\math\Vector3($b->getFloorX(), $b->getFloorY(), $b->getFloorZ()), $this->plugin->getConfig()->get('particle-scale'));
-				$b->getLevel()->addParticle($particle);
 				}else{
 					$e->setCancelled();
 					$p->sendMessage($this->plugin->getLang('no-permission-for-crate-chest-create'));
